@@ -4,7 +4,7 @@ import sys
 def main():
     print("enter number")
     n = inputint()
-    q = 1
+    q = 2
     field = []
     while q <= n:
         field.append(q)
