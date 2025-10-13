@@ -29,14 +29,7 @@ def execute_read_query(connection, query):
     except Error as e:
         print(f"The error '{e}' occurred")
 
-
 connection = create("./test.sqlite")
-select_users = "SELECT * from users"
-users = execute_read_query(connection, select_users)
-
-for user in users:
-    print(user)
-
 create_users_table = """
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,7 +39,7 @@ CREATE TABLE IF NOT EXISTS users (
   nationality TEXT
 );
 """
-"""
+insertin = """
 INSERT INTO
   users (name, age, gender, nationality)
 VALUES
@@ -56,8 +49,19 @@ VALUES
   ('Mike', 40, 'male', 'Denmark'),
   ('Elizabeth', 21, 'female', 'Canada');
 """
+#execute(connection, create_users_table)
+#execute(connection, insertin)
 
-delete = """
-DELETE FROM users
+select_users = "SELECT * from users"
+users = execute_read_query(connection, select_users)
+for user in users:
+    print(user)
+
+
+
+query = """
+SELECT * FROM users where name = 'James'
 """
-execute(connection, delete)
+jj = execute_read_query(connection, query)
+print(jj)
+
