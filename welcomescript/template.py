@@ -1,6 +1,6 @@
 
-import getpass
-import hashlib
+
+import login
 import helper
 
 def main():
@@ -8,14 +8,9 @@ def main():
     print("UUT starting up... \n Welcome!")
     uname = helper.promptinput("Enter your username:")
     print("Password:")
-    hpwd = pwdin()
+    hpwd = login.pwdin()
+    login.attemptLogin(uname,hpwd)
 
-def pwdin() -> str:
-    try:
-        res = hashlib.sha384(getpass.getpass("> ").encode()).hexdigest()
-        return res
-    except KeyboardInterrupt:
-        exit(0)
 
 if __name__ == "__main__":
     main()
