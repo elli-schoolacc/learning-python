@@ -41,5 +41,10 @@ def execute_query(connection, query, read: bool = False):
     except Error as e:
         print(f"Fatal Exception: {e}")
 
-def find_user(username, hashed_password):
-    return
+def find_user(connection, username):
+    fetch_usr_pwd = f"""
+    SELECT password FROM users WHERE uname={username} """
+    try:
+        hashpwd = execute_query(connection, fetch_usr_pwd, True)
+    except Error as e:
+        print(f"Exception: {e}")
