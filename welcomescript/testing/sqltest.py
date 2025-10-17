@@ -10,58 +10,47 @@ def create(path):
         print(f"error: {e}")
     return connection
 
-def execute(connection, query):
-    cursor = connection.cursor()
-    try:
-        cursor.execute(query)
-        connection.commit()
-        print("ex successfull")
-    except Error as e:
-        print(f"error: {e}")
-
-def execute_read_query(connection, query):
+def execute_query(connection, query, read: bool = False):
     cursor = connection.cursor()
     result = None
     try:
         cursor.execute(query)
-        result = cursor.fetchall()
-        return result
+        if read:
+            result = cursor.fetchall()
+            return result
+        else:  
+            connection.commit()
     except Error as e:
-        print(f"The error '{e}' occurred")
+        print(f"Fatal Exception: {e}")
 
-connection = create("./test.sqlite")
-create_users_table = """
-CREATE TABLE IF NOT EXISTS users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
-  age INTEGER,
-  gender TEXT,
-  nationality TEXT
-);
-"""
+connection = create("usrdata.sqlite")
+createtable = """
+    CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    uname TEXT NOT NULL,    
+    dname TEXT,
+    usettings TEXT,
+    password TEXT NOT NULL,
+    uuid TEXT
+    );
+    """
 insertin = """
-INSERT INTO
-  users (name, age, gender, nationality)
-VALUES
-  ('James', 25, 'male', 'USA'),
-  ('Leila', 32, 'female', 'France'),
-  ('Brigitte', 35, 'female', 'England'),
-  ('Mike', 40, 'male', 'Denmark'),
-  ('Elizabeth', 21, 'female', 'Canada');
+    INSERT INTO
+    users (uname, password)
+    VALUES
+    ('James',  'jjames'),
+    ('Leila', 'PASSWORD'),
+    ('Brigitte', '1234'),
+    ('Mike', 'password'),
+    ('Elizabeth', 'hello world');
 """
-#execute(connection, create_users_table)
-#execute(connection, insertin)
-
-select_users = "SELECT * from users"
-users = execute_read_query(connection, select_users)
-for user in users:
-    print(user)
-
-
+#execute_query(connection, createtable)
+#execute_query(connection, insertin)
 
 query = """
-SELECT * FROM users where name = 'James'
+SELECT password FROM users where uname='Kite'
 """
-jj = execute_read_query(connection, query)
+
+jj = execute_query(connection, query, True)
 print(jj)
 

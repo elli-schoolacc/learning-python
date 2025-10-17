@@ -6,6 +6,7 @@ def create_connection(path):
     conection = None
     try:
         connection = sqlite3.connect(path)
+        initalize_table(connection)
     except Error as e:
         print(f"Fatal Exception: {e}")
     return connection
@@ -16,7 +17,6 @@ def initalize_table(connection):
 #
 #   |id     |username   |displayname    |user settings  |hashed password    | uuid-4    |
 #   |       |           |               |               |                   |           |
-
     createtable = """
     CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,6 +27,7 @@ def initalize_table(connection):
     uuid TEXT NOT NULL
     );
     """
+    execute_query(connection,createtable)
 
 def execute_query(connection, query, read: bool = False):
     cursor = connection.cursor()
@@ -43,8 +44,19 @@ def execute_query(connection, query, read: bool = False):
 
 def find_user(connection, username):
     fetch_usr_pwd = f"""
-    SELECT password FROM users WHERE uname={username} """
+    SELECT password FROM users WHERE uname='{username}' """
     try:
         hashpwd = execute_query(connection, fetch_usr_pwd, True)
+        return hashpwd
     except Error as e:
         print(f"Exception: {e}")
+    return None
+
+def find_item(connection, column, where, what):
+    fetch_: f"SELECT {column} FROM users WHERE {where}='{what}'"
+    try:
+        fin_return = execute_query(connection, fetch_, True)
+        return fin_return
+    except Error as e:
+        print(f"Exception: {e}")
+    return None
