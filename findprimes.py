@@ -1,6 +1,5 @@
 import sys
 
-
 def main():
     print("enter number")
     n = inputint()

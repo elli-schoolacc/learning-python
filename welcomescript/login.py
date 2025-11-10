@@ -3,7 +3,6 @@ import getpass
 import sqlconn
 import uuid
 
-
 def pwdin() -> str:
     try:
         res = hashlib.sha384(getpass.getpass("> ").encode()).hexdigest()
@@ -15,9 +14,20 @@ def attemptLogin(username, hashed_password):
     un = username
     pwd = hashed_password
     connection = sqlconn.create_connection("./usrdata")
-    print(un)
-    print(pwd)
-    print(sqlconn.find_user(connection,un))
+    dbpwd = sqlconn.find_user(connection,un)
+    if dbpwd is None:
+        print("Password or Username incorrect")
+        return False
+    if pwd == dbpwd:
+        return True
+
+    
+
+
+def debug_listTable():
+    connection = sqlconn.create_connection("./usrdata")
+    print(sqlconn.fetch_table(connection))
+    
 
 def createuser(uname: str, password: str, displayname: str = "", connection=sqlconn.create_connection("./usrdata")):
     c_result = []
@@ -38,15 +48,12 @@ def createuser(uname: str, password: str, displayname: str = "", connection=sqlc
     
     c_settings = "default-settings"
 
-    if len(c_password) < 8:
-        c_result.append("pwd too short")
-    c_password = hashlib.sha384(c_password).hexdigest()
 #   |id     |username   |displayname    |user settings  |hashed password    | uuid-4    |
 #   |       |           |               |               |                   |           |
+
     cuserstr = f"""
         INSERT INTO
-        users
-        VALUES
-        ('{c_username}', '{c_displayname}', '{c_settings}', '{c_password}', '{c_uuid}')"""
+        users ('uname', 'dname', 'usettings', 'password', 'uuid')
+        VALUES ('{c_username}', '{c_displayname}', '{c_settings}', '{c_password}', '{c_uuid}')"""
     
     sqlconn.execute_query(connection, cuserstr)

@@ -12,11 +12,12 @@ def create_connection(path):
     return connection
 
 def initalize_table(connection):
-#
+
 # Create Table for User Data
 #
 #   |id     |username   |displayname    |user settings  |hashed password    | uuid-4    |
 #   |       |           |               |               |                   |           |
+
     createtable = """
     CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,8 +47,8 @@ def find_user(connection, username):
     fetch_usr_pwd = f"""
     SELECT password FROM users WHERE uname='{username}' """
     try:
-        hashpwd = execute_query(connection, fetch_usr_pwd, True)
-        return hashpwd
+        hashpwd= execute_query(connection, fetch_usr_pwd, True)
+        return hashpwd[0][0]
     except Error as e:
         print(f"Exception: {e}")
     return None
@@ -57,6 +58,16 @@ def find_item(connection, column, where, what):
     try:
         fin_return = execute_query(connection, fetch_, True)
         return fin_return
+    except Error as e:
+        print(f"Exception: {e}")
+    return None
+
+def fetch_table(connection):
+    fetch_req = f"""
+    SELECT * FROM users """
+    try:
+        fetch = execute_query(connection, fetch_req, True)
+        return fetch
     except Error as e:
         print(f"Exception: {e}")
     return None

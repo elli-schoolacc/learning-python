@@ -1,9 +1,11 @@
+✓
+
 Server
 - Domain ✓
 - Network-Switch 
 - Setup Computers w/ Proxmox
 - KVM Console
-  -RPi 3b+/4
+  -RPi 3b+/4 
 - Next Cloud Pi
 - AdBlocker
 - html
