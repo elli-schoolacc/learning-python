@@ -54,9 +54,18 @@ def find_user(connection, username):
     return None
 
 def find_item(connection, column, where, what):
-    fetch_: f"SELECT {column} FROM users WHERE {where}='{what}'"
+    """Find specific item from users table
+    Args:
+        connection: SQLite3 Connection object
+        column (str): Column to fetch
+        where (str): Column to search in
+        what (str): Value to search for"""
+
+    fetch_ = f"SELECT {column} FROM users WHERE {where}='{what}'"
     try:
         fin_return = execute_query(connection, fetch_, True)
+        if fin_return == []:
+            return None
         return fin_return
     except Error as e:
         print(f"Exception: {e}")

@@ -2,6 +2,7 @@ import hashlib
 import getpass
 import sqlconn
 import uuid
+import helper as h 
 
 def pwdin() -> str:
     try:
@@ -29,28 +30,49 @@ def debug_listTable():
     print(sqlconn.fetch_table(connection))
     
 
+def checkavailability(username: str, connection=sqlconn.create_connection("./usrdata")) -> bool:
+    existing_usr = sqlconn.find_item(connection, "uname", "uname", username)
+    if existing_usr == None:
+        return True
+    return False
+
+def checkcomponents(username: str) -> bool:
+    if len(username) < 3:
+        return False
+    if any(not c.isalnum for c in username):
+        return False
+    return True
+
 def createuser(uname: str, password: str, displayname: str = "", connection=sqlconn.create_connection("./usrdata")):
     c_result = []
     c_username: str = uname
     c_displayname: str = displayname
     c_settings: str
     c_password: str = password
-    c_uuid: str = str(uuid.uuid4())
+
+
+
+    while True:
+        c_uuid: str = str(uuid.uuid4())
+        existing_uuid = sqlconn.find_item(connection, "uuid", "uuid", c_uuid)
+        if existing_uuid is None:
+            break
 
     #validity check
     if len(c_username) < 3:
-        c_result.append("At least 3 Char")
+        raise h.UsernameError("Username too short")
     if any(not c.isalnum for c in c_username):
-        c_result.append("only use alnum")
+        raise h.UsernameError("Username contains invalid characters")
     
+    existing_usr = sqlconn.find_item(connection, "uname", "uname", c_username)
+    if existing_usr is None:
+        raise h.UsernameError("Username already exists")
+
     if displayname == "":
         c_displayname = uname
     
     c_settings = "default-settings"
-
-#   |id     |username   |displayname    |user settings  |hashed password    | uuid-4    |
-#   |       |           |               |               |                   |           |
-
+    
     cuserstr = f"""
         INSERT INTO
         users ('uname', 'dname', 'usettings', 'password', 'uuid')
