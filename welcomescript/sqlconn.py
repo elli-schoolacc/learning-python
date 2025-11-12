@@ -47,7 +47,9 @@ def find_user(connection, username):
     fetch_usr_pwd = f"""
     SELECT password FROM users WHERE uname='{username}' """
     try:
-        hashpwd= execute_query(connection, fetch_usr_pwd, True)
+        hashpwd = execute_query(connection, fetch_usr_pwd, True)
+        if hashpwd == []:
+            return None
         return hashpwd[0][0]
     except Error as e:
         print(f"Exception: {e}")

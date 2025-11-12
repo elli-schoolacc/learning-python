@@ -13,6 +13,7 @@ def main():
         if login.attemptLogin(uname,hpwd):
             break
         print("Password or Username incorrect")
+        
     uuid = find_item(create_connection("./usrdata"), "uuid", "uname", uname)[0][0]
     startmenu(uuid)    
 
@@ -46,6 +47,6 @@ def createu():
 
 if __name__ == "__main__":
     #createu()
-    login.debug_listTable()
+    #login.debug_listTable()
     main()
     
