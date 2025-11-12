@@ -2,11 +2,35 @@
 
 Server
 - Domain ✓
-- Network-Switch 
-- Setup Computers w/ Proxmox
+- Network-Switch ✓ 
+- Setup Computers w/ Proxmox ✓
 - KVM Console
-  -RPi 3b+/4 
+  -RPi 3b+/4 ✓
 - Next Cloud Pi
 - AdBlocker
 - html
 - VPN
+
+Welcomescript.py
+  next Tasks:
+    Security Menu
+      Encryption
+    Decoration Menu
+      Ascii Header
+    Preferences Menu
+      Think of something
+    Games Menu
+      Snake
+      PacMan 
+      Lumberjack left right jump thing?
+      tetris
+    Profile Menu
+      view & change 
+        password
+        username
+        displayname
+    Admin Menu
+      Create New Account
+      Delete Accounts
+      View Users
+      etc
