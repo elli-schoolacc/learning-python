@@ -1,12 +1,14 @@
-import menu_decoration, menu_games, menu_preferences, menu_profile, menu_security
+import menu_decoration, menu_games, menu_preferences, menu_profile, menu_security, menu_admin
 
-def CommandRunner():
-    menu = {
-        '1': ('Security', security_settings),
-        '2': ('Decorations', decorations),
-        '3': ('Games', games),
-        'p': ('Preferences', preferences),
-        'v': ('ViewProfile', view_profile),
-        'q': ('Quit', quit)
-    }
-    
+menu = {
+            '1': ('Security', menu_security.menu_security()),
+            '2': ('Decorations', menu_decoration.menu_decoration()),
+            '3': ('Games', menu_games.menu_games()),
+            '4': ('Admin', menu_admin.menu_admin()),
+            'p': ('Preferences', menu_preferences.menu_preferences()),
+            'v': ('ViewProfile', menu_profile.menu_profile()),
+            'q': ('Quit', exit(0))
+        }
+
+def a():
+    pass
