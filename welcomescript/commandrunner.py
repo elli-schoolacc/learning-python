@@ -7,8 +7,8 @@ menu = {
             '4': ('Admin', menu_admin.menu_admin()),
             'p': ('Preferences', menu_preferences.menu_preferences()),
             'v': ('ViewProfile', menu_profile.menu_profile()),
-            'q': ('Quit', exit(0))
+            'q': ('Quit', print("exit"))
         }
 
 def a():
-    pass
+    return
