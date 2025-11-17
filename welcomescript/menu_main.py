@@ -26,7 +26,7 @@ def startmenu(user_uuid : str) -> None:
 Welcome, {user['dname']}!
 Please choose an option:""")
         for key, value in g.menu.items():
-            print(f"[{key}] {value}")
+            print(f"[{key}] {value[0]}")
         choice = helper.promptinput("Select an option:", False)
         returnhandle = menu_choice(choice)
         if returnhandle != "":
@@ -43,7 +43,8 @@ def menu_choice(choice: str) -> str:
         str: Error message if invalid choice, else empty string
     """
     try:
-        g.menu[choice]
+        g.menu[choice][1]()
+        return ""
     except KeyError:
         return "Invalid choice, please try again."
 

@@ -1,4 +1,4 @@
 
 
 def menu_games():
-    return
+    print("Games Menu - Under Construction")

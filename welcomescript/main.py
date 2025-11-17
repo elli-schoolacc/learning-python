@@ -1,4 +1,3 @@
-print("help")
 import login
 import helper
 from menu_main import startmenu

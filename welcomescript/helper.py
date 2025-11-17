@@ -19,6 +19,13 @@ def clearlines():
     if os.name == 'nt': os.system('cls') 
     else: os.system('clear')
 
+def exitprogram():
+    print("Exiting program...")
+    exit(0)
+
+def exiterror(code : int):
+    print(f"Exiting program with error code {code}...")
+    exit(code)
 
 class UsernameError(Exception):
     pass
